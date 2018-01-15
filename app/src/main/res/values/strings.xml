@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Campus Borrow</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="prenume">Prenume</string>
+</resources>

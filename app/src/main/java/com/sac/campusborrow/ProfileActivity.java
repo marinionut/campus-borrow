@@ -1,14 +1,14 @@
 package com.sac.campusborrow;
 
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.View;
-        import android.widget.ArrayAdapter;
-        import android.widget.ListAdapter;
-        import android.widget.ListView;
-        import android.widget.TextView;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-        import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
 

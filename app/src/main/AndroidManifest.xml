@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sac.campusborrow">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,9 +20,10 @@
         </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".UserProfileActivity"/>
-        <activity android:name=".DashboardActivity"/>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".ObiectActivity"></activity>
     </application>
 
 </manifest>

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
                             //Pentru a intra in vechea implementare
-                            //Intent i = new Intent(LoginActivity.this, ProfileActivitu.class);
+                            //Intent i = new Intent(LoginActivity.this, ProfileActivity.class);
                             i.putExtra("Email", firebaseAuth.getCurrentUser().getEmail());
                             startActivity(i);
                         } else {

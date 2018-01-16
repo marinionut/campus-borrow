@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.config;
 
 /**
  * Created by ionut on 12/10/2017.

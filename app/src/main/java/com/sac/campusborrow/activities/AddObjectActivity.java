@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.activities;
 
 import android.app.ProgressDialog;
 import android.content.CursorLoader;
@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.sac.campusborrow.R;
 
 import java.util.UUID;
 

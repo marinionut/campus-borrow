@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.sac.campusborrow.R;
 import com.sac.campusborrow.fragments.FragmentOne;
 import com.sac.campusborrow.fragments.FragmentThree;
 import com.sac.campusborrow.fragments.FragmentTwo;

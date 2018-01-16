@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.sac.campusborrow.R;
 
 public class ProfileActivity extends AppCompatActivity {
 

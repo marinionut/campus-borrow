@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.activities;
 
 import android.support.v7.app.AppCompatActivity;
 

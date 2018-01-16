@@ -1,4 +1,4 @@
-package com.sac.campusborrow;
+package com.sac.campusborrow.model;
 
 /**
  * Created by preda on 16-Jan-18.

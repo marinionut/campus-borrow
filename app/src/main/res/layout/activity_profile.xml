@@ -34,12 +34,4 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvEmailProfile" />
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Adauga"
-        android:onClick="btnAdd_Click"/>
 </RelativeLayout>

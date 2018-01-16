@@ -3,6 +3,8 @@
     package="com.sac.campusborrow">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +25,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".DashboardActivity" />
-        <activity android:name=".ObiectActivity" />
+        <activity android:name=".ObiectActivity"></activity>
+        <activity android:name=".AddObjectActivity"></activity>
     </application>
 
 </manifest>

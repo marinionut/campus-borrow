@@ -2,7 +2,6 @@ package com.sac.campusborrow;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,9 +29,4 @@ public class ProfileActivity extends AppCompatActivity {
         ListView objListView = (ListView) findViewById(R.id.lvObj);
         objListView.setAdapter(objAdapter);
     }
-
-    public void btnAdd_Click(View v) {
-
-    }
-
 }

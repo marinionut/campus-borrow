@@ -7,26 +7,18 @@ android:layout_height="match_parent">
         android:id="@+id/tvEmailProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lvObj"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Email"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
-        android:layout_marginLeft="5dip"/>
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
-        android:id="@+id/lvObj"
+        android:id="@+id/lvObj3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/addObj" />
-
-    <Button
-        android:id="@+id/addObj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="Adauga" />
+        android:layout_below="@+id/tvEmailProfile" />
 
 </RelativeLayout>

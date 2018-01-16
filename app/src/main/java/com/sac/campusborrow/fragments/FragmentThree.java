@@ -8,16 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sac.campusborrow.DashboardActivity;
+import com.sac.campusborrow.Obiect;
 import com.sac.campusborrow.ObiectActivity;
 import com.sac.campusborrow.R;
 
@@ -48,16 +50,20 @@ public class FragmentThree extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_three, container, false);
+        View view = inflater.inflate(R.layout.fragment_three, container, false);
 
-        DashboardActivity activity = (DashboardActivity) getActivity();
-        String email = activity.getEmail();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String userId = user.getUid();
+        final String email = user.getEmail();
+
+//        DashboardActivity activity = (DashboardActivity) getActivity();
+//        String email = activity.getEmail();
 
         tvEmail = (TextView) view.findViewById(R.id.tvEmailProfile);
         tvEmail.setText(email);
 
         list = new ArrayList<String>();
-        listView = (ListView) view.findViewById(R.id.lvObj);
+        listView = (ListView) view.findViewById(R.id.lvObj3);
         adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,13 +74,16 @@ public class FragmentThree extends Fragment {
                 startActivity(myIntent);
             }
         });
+
         dref = FirebaseDatabase.getInstance().getReference("/obiecte");
         dref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getKey();
-                list.add(value);
-                adapter.notifyDataSetChanged();
+                Obiect obiect = dataSnapshot.getValue(Obiect.class);
+                if(obiect.userId.compareTo(userId) == 0 && obiect.status.compareTo("disponibil") == 0) {
+                    list.add(obiect.getNume());
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -85,8 +94,10 @@ public class FragmentThree extends Fragment {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getKey();
-                list.remove(value);
-                adapter.notifyDataSetChanged();
+                if(list.indexOf(value) != -1) {
+                    list.remove(value);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override

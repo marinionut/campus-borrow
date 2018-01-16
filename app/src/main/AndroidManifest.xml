@@ -23,7 +23,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".DashboardActivity" />
-        <activity android:name=".ObiectActivity"></activity>
+        <activity android:name=".ObiectActivity" />
     </application>
 
 </manifest>

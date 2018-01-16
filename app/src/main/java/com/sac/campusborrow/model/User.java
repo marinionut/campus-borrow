@@ -12,6 +12,8 @@ public class User {
     public String phoneNumber;
     public String address;
     public double rating;
+    public int obiecteLuate;
+    public int obiecteOferite;
 
     public User() {
     }
@@ -62,5 +64,21 @@ public class User {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public int getObiecteLuate() {
+        return obiecteLuate;
+    }
+
+    public void setObiecteLuate(int obiecteLuate) {
+        this.obiecteLuate = obiecteLuate;
+    }
+
+    public int getObiecteOferite() {
+        return obiecteOferite;
+    }
+
+    public void setObiecteOferite(int obiecteOferite) {
+        this.obiecteOferite = obiecteOferite;
     }
 }

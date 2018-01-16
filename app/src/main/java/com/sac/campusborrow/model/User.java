@@ -81,4 +81,6 @@ public class User {
     public void setObiecteOferite(int obiecteOferite) {
         this.obiecteOferite = obiecteOferite;
     }
+
+    public String getDisplayName() { return firstName+" "+lastName; }
 }

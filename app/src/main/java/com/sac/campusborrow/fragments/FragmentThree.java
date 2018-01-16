@@ -55,9 +55,6 @@ public class FragmentThree extends Fragment {
         final String userId = user.getUid();
         final String email = user.getEmail();
 
-//        DashboardActivity activity = (DashboardActivity) getActivity();
-//        String email = activity.getEmail();
-
         tvEmail = (TextView) view.findViewById(R.id.tvEmailProfile);
         tvEmail.setText(email);
 
@@ -69,7 +66,8 @@ public class FragmentThree extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent myIntent = new Intent(view.getContext(), ObiectActivity.class);
-                myIntent.putExtra("NumeObiect", listView.getItemAtPosition(i).toString());
+                myIntent.putExtra("numeObiect", listView.getItemAtPosition(i).toString());
+                myIntent.putExtra("from", "listaMea");
                 startActivity(myIntent);
             }
         });

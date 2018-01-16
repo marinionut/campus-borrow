@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sac.campusborrow.activities.AddObjectActivity;
+import com.sac.campusborrow.activities.ObiectActivity;
 import com.sac.campusborrow.model.Obiect;
 import com.sac.campusborrow.R;
 
@@ -60,7 +62,15 @@ public class FragmentOne extends Fragment {
         listView = (ListView) view.findViewById(R.id.lvObj1);
         adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, list);
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent myIntent = new Intent(view.getContext(), ObiectActivity.class);
+                myIntent.putExtra("numeObiect", listView.getItemAtPosition(i).toString());
+                myIntent.putExtra("from", "listaToate");
+                startActivity(myIntent);
+            }
+        });
 
         dref = FirebaseDatabase.getInstance().getReference("/obiecte");
         dref.addChildEventListener(new ChildEventListener() {

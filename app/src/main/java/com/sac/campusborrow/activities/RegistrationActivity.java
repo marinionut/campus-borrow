@@ -80,6 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
         user.setLastName(txtLastName.getText().toString());
         user.setPhoneNumber(txtPhoneNumber.getText().toString());
         user.setAddress(txtAddress.getText().toString());
+        user.setRating(0);
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         String userId = firebaseUser.getUid();

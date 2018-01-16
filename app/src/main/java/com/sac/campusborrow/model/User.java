@@ -11,6 +11,7 @@ public class User {
     public String email;
     public String phoneNumber;
     public String address;
+    public double rating;
 
     public User() {
     }
@@ -53,5 +54,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

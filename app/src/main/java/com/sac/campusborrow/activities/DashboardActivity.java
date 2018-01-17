@@ -38,8 +38,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentOne(), "Lista anunturi");
-        adapter.addFragment(new FragmentTwo(), "Adauga anunt");
+        adapter.addFragment(new FragmentOne(), "Anunturi");
+        adapter.addFragment(new FragmentTwo(), "Imprumuturi");
         adapter.addFragment(new FragmentThree(), "Anunturile tale");
         viewPager.setAdapter(adapter);
 

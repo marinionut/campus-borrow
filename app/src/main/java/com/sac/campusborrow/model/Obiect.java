@@ -10,6 +10,7 @@ public class Obiect {
     public String status;
     public String userId;
     public String userId2;
+    public String imageId;
 
     public Obiect() {
         this.status = "disponibil";
@@ -54,5 +55,13 @@ public class Obiect {
 
     public void setUserId2(String userId2) {
         this.userId2 = userId2;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 }

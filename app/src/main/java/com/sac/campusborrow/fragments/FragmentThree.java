@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sac.campusborrow.model.Obiect;
 import com.sac.campusborrow.activities.ObiectActivity;
 import com.sac.campusborrow.R;
+import com.sac.campusborrow.model.Status;
 
 import java.util.ArrayList;
 
@@ -30,11 +31,12 @@ import java.util.ArrayList;
 
 public class FragmentThree extends Fragment {
 
-    TextView tvEmail;
     DatabaseReference dref;
     ListView listView;
     ArrayList<String> list;
+    ArrayList<String> objectIdList;
     ArrayAdapter<String> adapter;
+
 
     public FragmentThree() {
         // Required empty public constructor
@@ -53,12 +55,10 @@ public class FragmentThree extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String userId = user.getUid();
-        final String email = user.getEmail();
-
-        tvEmail = (TextView) view.findViewById(R.id.tvEmailProfile);
-        tvEmail.setText(email);
+        final String userName = user.getDisplayName();
 
         list = new ArrayList<String>();
+        objectIdList = new ArrayList<String>();
         listView = (ListView) view.findViewById(R.id.lvObj3);
         adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, list);
         listView.setAdapter(adapter);
@@ -66,7 +66,7 @@ public class FragmentThree extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent myIntent = new Intent(view.getContext(), ObiectActivity.class);
-                myIntent.putExtra("numeObiect", listView.getItemAtPosition(i).toString());
+                myIntent.putExtra("numeObiect", objectIdList.get(i));
                 myIntent.putExtra("from", "listaMea");
                 startActivity(myIntent);
             }
@@ -77,8 +77,10 @@ public class FragmentThree extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Obiect obiect = dataSnapshot.getValue(Obiect.class);
-                if(obiect.userId.compareTo(userId) == 0 && obiect.status.compareTo("disponibil") == 0) {
+                String key = dataSnapshot.getKey();
+                if(obiect.userId.compareTo(userId) == 0) {
                     list.add(obiect.getNume());
+                    objectIdList.add(key);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -93,6 +95,7 @@ public class FragmentThree extends Fragment {
                 String value = dataSnapshot.getKey();
                 if(list.indexOf(value) != -1) {
                     list.remove(value);
+                    objectIdList.remove(value);
                     adapter.notifyDataSetChanged();
                 }
             }

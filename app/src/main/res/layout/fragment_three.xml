@@ -3,7 +3,7 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-    <TextView
+<!--    <TextView
         android:id="@+id/tvEmailProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -11,14 +11,14 @@ android:layout_height="match_parent">
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:gravity="center_vertical"
-        android:text="Email"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
     <ListView
         android:id="@+id/lvObj3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvEmailProfile" />
+        android:layout_alignParentStart="true" />
+        <!--android:layout_below="@+id/tvEmailProfile" />-->
 
 </RelativeLayout>

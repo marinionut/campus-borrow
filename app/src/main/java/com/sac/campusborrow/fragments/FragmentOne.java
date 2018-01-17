@@ -21,6 +21,7 @@ import com.sac.campusborrow.activities.AddObjectActivity;
 import com.sac.campusborrow.activities.ObiectActivity;
 import com.sac.campusborrow.model.Obiect;
 import com.sac.campusborrow.R;
+import com.sac.campusborrow.model.Status;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class FragmentOne extends Fragment {
     ListView listView;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
+    ArrayList<String> objectIdList;
 
     public FragmentOne() {
         // Required empty public constructor
@@ -59,6 +61,7 @@ public class FragmentOne extends Fragment {
         });
 
         list = new ArrayList<String>();
+        objectIdList = new ArrayList<String>();
         listView = (ListView) view.findViewById(R.id.lvObj1);
         adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, list);
         listView.setAdapter(adapter);
@@ -66,7 +69,7 @@ public class FragmentOne extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent myIntent = new Intent(view.getContext(), ObiectActivity.class);
-                myIntent.putExtra("numeObiect", listView.getItemAtPosition(i).toString());
+                myIntent.putExtra("numeObiect", objectIdList.get(i));
                 myIntent.putExtra("from", "listaToate");
                 startActivity(myIntent);
             }
@@ -77,10 +80,12 @@ public class FragmentOne extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Obiect obiect = dataSnapshot.getValue(Obiect.class);
-                if(obiect.status.compareTo("disponibil") == 0) {
+                String key = dataSnapshot.getKey();
+                if(obiect.status.compareTo(Status.DISPONIBIL.name()) == 0) {
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     if(obiect.userId.compareTo(userId) != 0) {
                         list.add(obiect.getNume());
+                        objectIdList.add(key);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -89,10 +94,12 @@ public class FragmentOne extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Obiect obiect = dataSnapshot.getValue(Obiect.class);
-                if(obiect.status.compareTo("disponibil") != 0) {
+                String key = dataSnapshot.getKey();
+                if(obiect.status.compareTo(Status.DISPONIBIL.name()) != 0) {
                     String value = obiect.getNume();
                     if(list.indexOf(value) != -1) {
                         list.remove(value);
+                        objectIdList.remove(key);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -103,6 +110,7 @@ public class FragmentOne extends Fragment {
                 String value = dataSnapshot.getKey();
                 if(list.indexOf(value) != -1) {
                     list.remove(value);
+                    objectIdList.add(value);
                     adapter.notifyDataSetChanged();
                 }
             }

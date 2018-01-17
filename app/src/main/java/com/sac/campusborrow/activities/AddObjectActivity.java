@@ -19,12 +19,16 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sac.campusborrow.R;
+import com.sac.campusborrow.model.Obiect;
+import com.sac.campusborrow.model.Status;
 
 import java.util.UUID;
 
@@ -38,12 +42,11 @@ public class AddObjectActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button btnChoose, btnAddObject, btnClearObject;
     static final int PICK_IMAGE_REQUEST = 1;
-    String filePath = "";
-    Uri filePathUri;
+    private String filePath = "";
+    private Uri filePathUri;
     //Firebase
-    FirebaseStorage storage;
-    StorageReference storageReference;
-
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -53,6 +56,7 @@ public class AddObjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_addobject);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -127,17 +131,25 @@ public class AddObjectActivity extends AppCompatActivity {
 
     private void uploadImage() {
 
-        if(filePath != null)
+        if(filePath != null && sanityChecks())
         {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            final String uuid = UUID.randomUUID().toString();
+
+            StorageReference ref = storageReference.child("images/"+ uuid);
             ref.putFile(filePathUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            try {
+                                addObject(uuid);
+                            } catch (Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(AddObjectActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                             progressDialog.dismiss();
                             Toast.makeText(AddObjectActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
@@ -158,5 +170,29 @@ public class AddObjectActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void addObject(String uuid) {
+        Obiect obiect = new Obiect();
+        obiect.setNume(txtObjectName.getText().toString());
+        obiect.setDescriere(txtObjectDescription.getText().toString());
+        obiect.setImageId(uuid);
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        obiect.setUserId(firebaseUser.getUid());
+        obiect.setUserId2("0");
+        obiect.setStatus(Status.DISPONIBIL.name());
+
+        databaseReference.child("obiecte").child(uuid).setValue(obiect);
+    }
+
+    private boolean sanityChecks() {
+        if ((imageView != null) &&
+                (txtObjectName != null && txtObjectName.getText().length() != 0) &&
+                (txtObjectDescription != null && txtObjectDescription.getText().length() != 0)) {
+
+            return true;
+        }
+        return false;
     }
 }

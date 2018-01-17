@@ -14,6 +14,7 @@ public class User {
     public double rating;
     public int obiecteLuate;
     public int obiecteOferite;
+    public int counterRating;
 
     public User() {
     }
@@ -83,4 +84,12 @@ public class User {
     }
 
     public String getDisplayName() { return firstName+" "+lastName; }
+
+    public int getCounterRating() {
+        return counterRating;
+    }
+
+    public void setCounterRating(int counterRating) {
+        this.counterRating = counterRating;
+    }
 }

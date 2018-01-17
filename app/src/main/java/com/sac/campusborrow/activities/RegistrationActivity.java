@@ -83,7 +83,7 @@ public class RegistrationActivity extends AppCompatActivity {
         user.setRating(0);
         user.setObiecteLuate(0);
         user.setObiecteOferite(0);
-        user.setCounterRating(1);
+        user.setCounterRating(0);
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         String userId = firebaseUser.getUid();

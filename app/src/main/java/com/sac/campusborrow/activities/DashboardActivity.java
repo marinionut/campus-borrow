@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.sac.campusborrow.R;
+import com.sac.campusborrow.fragments.FragmentFour;
 import com.sac.campusborrow.fragments.FragmentOne;
 import com.sac.campusborrow.fragments.FragmentThree;
 import com.sac.campusborrow.fragments.FragmentTwo;
@@ -41,13 +42,11 @@ public class DashboardActivity extends AppCompatActivity {
         adapter.addFragment(new FragmentOne(), "Anunturi");
         adapter.addFragment(new FragmentTwo(), "Imprumuturi");
         adapter.addFragment(new FragmentThree(), "Anunturile tale");
+        adapter.addFragment(new FragmentFour(), "Utilizatori");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        this.email = getIntent().getExtras().getString("Email");
-
     }
 
     public String getEmail() {

@@ -148,6 +148,85 @@ public class ObiectActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
+            endTrade.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    obiect.setUserId("0");
+                    obiect.setStatus(Status.DISPONIBIL.name());
+
+                    DatabaseReference currentObjectDatabaseReference = oRef.child(bundle.getString("numeObiect"));
+                    currentObjectDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Obiect obiect = dataSnapshot.getValue(Obiect.class);
+
+                            DatabaseReference userOwnerOfObject = uRef.child(obiect.getUserId());
+                            userOwnerOfObject.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    try {
+                                        User userOwner = dataSnapshot.getValue(User.class);
+
+                                        int counterRating = userOwner.getCounterRating();
+                                        double rating = userOwner.getRating();
+
+                                        double newRating = rating * counterRating;
+                                        double ratingBarValue = ratingBar.getRating();
+
+                                        newRating = (newRating + ratingBarValue) / (counterRating + 1);
+
+                                        int obiecteOferite = userOwner.getObiecteOferite();
+
+                                        uRef.child(dataSnapshot.getKey()).child("counterRating").setValue(counterRating + 1);
+                                        uRef.child(dataSnapshot.getKey()).child("rating").setValue(newRating);
+                                        uRef.child(dataSnapshot.getKey()).child("obiecteOferite").setValue(obiecteOferite + 1);
+                                    } catch (Error e) {
+                                        Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            DatabaseReference currentUser = uRef.child(obiect.getUserId2());
+                            currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    try {
+                                        User userCurrent = dataSnapshot.getValue(User.class);
+
+                                        int obiecteLuate = userCurrent.getObiecteOferite();
+
+                                        uRef.child(dataSnapshot.getKey()).child("obiecteLuate").setValue(obiecteLuate + 1);
+                                    } catch (Exception e) {
+                                        Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    oRef.child(bundle.getString("numeObiect")).child("userId2").setValue("0");
+                    oRef.child(bundle.getString("numeObiect")).child("status").setValue(Status.DISPONIBIL.name());
+
+                    Intent i = new Intent(ObiectActivity.this, DashboardActivity.class);
+                    startActivity(i);
+                }
+            });
         }
 
 
@@ -178,87 +257,6 @@ public class ObiectActivity extends AppCompatActivity {
                 obiect.setStatus(Status.INCHIRIAT.name());
                 oRef.child(bundle.getString("numeObiect")).child("userId2").setValue(firebaseUser.getUid());
                 oRef.child(bundle.getString("numeObiect")).child("status").setValue(Status.INCHIRIAT.name());
-
-                Intent i = new Intent(ObiectActivity.this, DashboardActivity.class);
-                startActivity(i);
-            }
-        });
-
-        endTrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                obiect.setUserId("0");
-                obiect.setStatus(Status.DISPONIBIL.name());
-                String ownerUserId = uRef.child(bundle.getString("numeObiect")).child("userId").toString();
-                uRef.child(ownerUserId).child("obiecteOferite").toString();
-
-                DatabaseReference currentObjectDatabaseReference = oRef.child(bundle.getString("numeObiect"));
-                currentObjectDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Obiect obiect = dataSnapshot.getValue(Obiect.class);
-
-                        DatabaseReference userOwnerOfObject = uRef.child(obiect.getUserId2());
-                        userOwnerOfObject.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                try {
-                                    User userOwner = dataSnapshot.getValue(User.class);
-
-                                    int counterRating = userOwner.getCounterRating();
-                                    double rating = userOwner.getRating();
-
-                                    double newRating = rating * counterRating;
-                                    double ratingBarValue = ratingBar.getRating();
-
-                                    newRating = (newRating + ratingBarValue) / (counterRating + 1);
-
-                                    int obiecteOferite = userOwner.getObiecteOferite();
-
-                                    uRef.child(dataSnapshot.getKey()).child("rating").setValue(newRating);
-                                    uRef.child(dataSnapshot.getKey()).child("obiecteOferite").setValue(obiecteOferite + 1);
-                                } catch (Error e) {
-                                    Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        DatabaseReference currentUser = uRef.child(obiect.getUserId());
-                        currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                try {
-                                    User userCurrent = dataSnapshot.getValue(User.class);
-
-                                    int obiecteLuate = userCurrent.getObiecteOferite();
-
-                                    uRef.child(dataSnapshot.getKey()).child("obiecteLuate").setValue(obiecteLuate + 1);
-                                } catch (Exception e) {
-                                    Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-                oRef.child(bundle.getString("numeObiect")).child("userId2").setValue("0");
-                oRef.child(bundle.getString("numeObiect")).child("status").setValue(Status.DISPONIBIL.name());
 
                 Intent i = new Intent(ObiectActivity.this, DashboardActivity.class);
                 startActivity(i);

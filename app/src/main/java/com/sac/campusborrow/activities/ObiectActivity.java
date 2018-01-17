@@ -196,9 +196,9 @@ public class ObiectActivity extends AppCompatActivity {
                 currentObjectDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final Obiect obiect = dataSnapshot.getValue(Obiect.class);
+                        Obiect obiect = dataSnapshot.getValue(Obiect.class);
 
-                        final DatabaseReference userOwnerOfObject = uRef.child(obiect.getUserId2());
+                        DatabaseReference userOwnerOfObject = uRef.child(obiect.getUserId2());
                         userOwnerOfObject.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -215,8 +215,8 @@ public class ObiectActivity extends AppCompatActivity {
 
                                     int obiecteOferite = userOwner.getObiecteOferite();
 
-                                    uRef.child(obiect.getUserId2()).child("rating").setValue(newRating);
-                                    uRef.child(obiect.getUserId2()).child("obiecteOferite").setValue(obiecteOferite + 1);
+                                    uRef.child(dataSnapshot.getKey()).child("rating").setValue(newRating);
+                                    uRef.child(dataSnapshot.getKey()).child("obiecteOferite").setValue(obiecteOferite + 1);
                                 } catch (Error e) {
                                     Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -237,7 +237,7 @@ public class ObiectActivity extends AppCompatActivity {
 
                                     int obiecteLuate = userCurrent.getObiecteOferite();
 
-                                    uRef.child(obiect.getUserId2()).child("obiecteLuate").setValue(obiecteLuate + 1);
+                                    uRef.child(dataSnapshot.getKey()).child("obiecteLuate").setValue(obiecteLuate + 1);
                                 } catch (Exception e) {
                                     Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }

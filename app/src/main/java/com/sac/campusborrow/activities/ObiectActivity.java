@@ -178,7 +178,7 @@ public class ObiectActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     try {
                                         User userCurrent = dataSnapshot.getValue(User.class);
-                                        int obiecteLuate = userCurrent.getObiecteOferite();
+                                        int obiecteLuate = userCurrent.getObiecteLuate();
                                         uRef.child(dataSnapshot.getKey()).child("obiecteLuate").setValue(obiecteLuate + 1);
                                     } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         txtEmailAddress = (EditText) findViewById(R.id.txtEmailRegistration);
         txtPassword = (EditText) findViewById(R.id.txtPasswordRegistration);
         txtFirstName = (EditText) findViewById(R.id.txtNumeRegistration);
@@ -44,11 +46,11 @@ public class RegistrationActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
+
     public void btnRegistrationUser_Click(View v) {
         if (sanityChecks() == false) {
             Toast.makeText(RegistrationActivity.this, "Input Errors!",
                     Toast.LENGTH_LONG).show();
-
         } else {
             final ProgressDialog progressDialog = ProgressDialog.show(RegistrationActivity.this, "Please wait...", "Processing...", true);
             (firebaseAuth.createUserWithEmailAndPassword(txtEmailAddress.getText().toString(), txtPassword.getText().toString()))
@@ -59,10 +61,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_LONG).show();
-
                                 addUser();
-
-                                Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
                                 startActivity(i);
                             } else {
                                 Log.e("ERROR", task.getException().toString());

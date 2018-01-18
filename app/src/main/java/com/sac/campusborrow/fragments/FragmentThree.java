@@ -1,7 +1,6 @@
 package com.sac.campusborrow.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sac.campusborrow.model.Obiect;
 import com.sac.campusborrow.activities.ObiectActivity;
 import com.sac.campusborrow.R;
-import com.sac.campusborrow.model.Status;
 
 import java.util.ArrayList;
 

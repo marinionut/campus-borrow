@@ -2,8 +2,6 @@ package com.sac.campusborrow.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,16 +34,14 @@ import com.squareup.picasso.Picasso;
 public class ObiectActivity extends AppCompatActivity {
 
     Obiect obiect;
-    TextView titluObj, descriereObj, ownerObj, rUserName, phoneOwnerObj, rPhone;
-    Button delObj, rejTrade, accTrade, reqTrade, endTrade, fdbTrade, cancelTrade;
+    TextView titluObj, descriereObj, userDisplayName, userPhoneNumber;
+    Button delObj, reqTrade, endTrade, cancelTrade;
     ImageView imagineObj;
     RatingBar ratingBar;
     DatabaseReference oRef, uRef;
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     Bundle bundle;
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -59,25 +54,18 @@ public class ObiectActivity extends AppCompatActivity {
         titluObj = (TextView) findViewById(R.id.titluObj);
         descriereObj = (TextView) findViewById(R.id.descriereObj);
         imagineObj = (ImageView) findViewById(R.id.imagineObj);
-        // hide owner/request user
-        ownerObj = (TextView) findViewById(R.id.ownerObj);
-        ownerObj.setVisibility(View.INVISIBLE);
-        rUserName = (TextView) findViewById(R.id.rUserName);
-        rUserName.setVisibility(View.INVISIBLE);
-        rPhone = (TextView)findViewById(R.id.rPhone);
-        rPhone.setVisibility(View.INVISIBLE);
-        phoneOwnerObj = (TextView)findViewById(R.id.phoneOwnerObj);
-        phoneOwnerObj.setVisibility(View.INVISIBLE);
+        // hide userDisplayName
+        userDisplayName = (TextView) findViewById(R.id.ownerObj);
+        userDisplayName.setVisibility(View.INVISIBLE);
+        userPhoneNumber = (TextView) findViewById(R.id.phoneOwnerObj);
+        userPhoneNumber.setVisibility(View.INVISIBLE);
+        // hide ratingBar
         ratingBar = (RatingBar) findViewById(R.id.rating);
         ratingBar.setVisibility(View.INVISIBLE);
         ratingBar.setClickable(Boolean.FALSE);
         // hide all buttons
         delObj = (Button) findViewById(R.id.delObj);
         delObj.setVisibility(View.INVISIBLE);
-        rejTrade = (Button) findViewById(R.id.rejTrade);
-        rejTrade.setVisibility(View.INVISIBLE);
-        accTrade = (Button) findViewById(R.id.accTrade);
-        accTrade.setVisibility(View.INVISIBLE);
         reqTrade = (Button) findViewById(R.id.reqTrade);
         reqTrade.setVisibility(View.INVISIBLE);
         endTrade = (Button) findViewById(R.id.endTrade);
@@ -89,26 +77,24 @@ public class ObiectActivity extends AppCompatActivity {
         oRef = FirebaseDatabase.getInstance().getReference("/obiecte/");
         uRef = FirebaseDatabase.getInstance().getReference("/users");
 
-
         if(previousView.compareTo("listaToate") == 0) {
-            ownerObj.setVisibility(View.VISIBLE);
+            userDisplayName.setVisibility(View.VISIBLE);
+            userPhoneNumber.setVisibility(View.VISIBLE);
             reqTrade.setVisibility(View.VISIBLE);
-            phoneOwnerObj.setVisibility(View.VISIBLE);
             ratingBar.setVisibility(View.VISIBLE);
-
         } else if(previousView.compareTo("listaMea") == 0) {
             delObj.setVisibility(View.VISIBLE);
-
             DatabaseReference myListObjectReference = oRef.child(bundle.getString("numeObiect"));
-
             myListObjectReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     obiect = snapshot.getValue(Obiect.class);
-                    if (obiect.getStatus().equals(Status.INCHIRIAT.name())) {
-                        cancelTrade.setVisibility(View.VISIBLE);
-                        rUserName.setVisibility(View.VISIBLE);
-                        rPhone.setVisibility(View.VISIBLE);
+                    if(obiect != null) {
+                        if (obiect.getStatus().equals(Status.INCHIRIAT.name())) {
+                            cancelTrade.setVisibility(View.VISIBLE);
+                            userDisplayName.setVisibility(View.VISIBLE);
+                            userPhoneNumber.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
@@ -117,14 +103,12 @@ public class ObiectActivity extends AppCompatActivity {
 
                 }
             });
-
         } else if(previousView.compareTo("listaInchiriate") == 0) {
             endTrade.setVisibility(View.VISIBLE);
             ratingBar.setVisibility(View.VISIBLE);
             ratingBar.setClickable(Boolean.TRUE);
-
-            ownerObj.setVisibility(View.VISIBLE);
-            phoneOwnerObj.setVisibility(View.VISIBLE);
+            userDisplayName.setVisibility(View.VISIBLE);
+            userPhoneNumber.setVisibility(View.VISIBLE);
 
             ratingBar.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -167,15 +151,11 @@ public class ObiectActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     try {
                                         User userOwner = dataSnapshot.getValue(User.class);
-
                                         int counterRating = userOwner.getCounterRating();
                                         double rating = userOwner.getRating();
-
                                         double newRating = rating * counterRating;
                                         double ratingBarValue = ratingBar.getRating();
-
                                         newRating = (newRating + ratingBarValue) / (counterRating + 1);
-
                                         int obiecteOferite = userOwner.getObiecteOferite();
 
                                         uRef.child(dataSnapshot.getKey()).child("counterRating").setValue(counterRating + 1);
@@ -198,9 +178,7 @@ public class ObiectActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     try {
                                         User userCurrent = dataSnapshot.getValue(User.class);
-
                                         int obiecteLuate = userCurrent.getObiecteOferite();
-
                                         uRef.child(dataSnapshot.getKey()).child("obiecteLuate").setValue(obiecteLuate + 1);
                                     } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -228,18 +206,6 @@ public class ObiectActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-        cancelTrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                oRef.child(bundle.getString("numeObiect")).child("userId2").setValue("0");
-                oRef.child(bundle.getString("numeObiect")).child("status").setValue(Status.DISPONIBIL.name());
-
-                Intent i = new Intent(ObiectActivity.this, DashboardActivity.class);
-                startActivity(i);
-            }
-        });
 
         delObj.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,9 +246,8 @@ public class ObiectActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 obiect = dataSnapshot.getValue(Obiect.class);
-
                 titluObj.setText(obiect.getNume());
-                descriereObj.setText("Descriere: "+obiect.getDescriere());
+                descriereObj.setText("Description: "+obiect.getDescriere());
 
                 storageReference.child("images/"+ obiect.getImageId()).getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -304,15 +269,12 @@ public class ObiectActivity extends AppCompatActivity {
                             }
                         });
 
-
-
                 uRef.child(obiect.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
-
-                        ownerObj.setText("Detinator: " + user.getDisplayName());
-                        phoneOwnerObj.setText(user.getPhoneNumber());
+                        userDisplayName.setText(user.getDisplayName());
+                        userPhoneNumber.setText(user.getPhoneNumber());
                         ratingBar.setRating((float) user.getRating());
                     }
 
@@ -328,8 +290,8 @@ public class ObiectActivity extends AppCompatActivity {
                         if (!obiect.getUserId2().equals("0")) {
                             User user = dataSnapshot.getValue(User.class);
                             if (user != null && bundle.get("from").equals("listaMea") && obiect.status.equals(Status.INCHIRIAT.name())) {
-                                rUserName.setText("Imprumutat lui: " + user.getFirstName() + " " + user.getLastName());
-                                rPhone.setText(user.getPhoneNumber());
+                                userDisplayName.setText(user.getDisplayName());
+                                userPhoneNumber.setText(user.getPhoneNumber());
                             }
                         }
                     }

@@ -1,27 +1,19 @@
 package com.sac.campusborrow.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sac.campusborrow.R;
-import com.sac.campusborrow.activities.AddObjectActivity;
-import com.sac.campusborrow.activities.ObiectActivity;
-import com.sac.campusborrow.model.Obiect;
-import com.sac.campusborrow.model.Status;
 import com.sac.campusborrow.model.User;
 
 import java.util.ArrayList;
@@ -64,12 +56,10 @@ public class FragmentFour extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
-                String key = dataSnapshot.getKey();
-                list.add("Rating:" + String.format("%.1f", user.getRating())
-                        + "   " + user.getFirstName() + " " + user.getLastName()
-                        + "   Luate:" + user.getObiecteLuate()
-                        + "   Oferite:" + user.getObiecteOferite());
-                //objectIdList.add(key);
+                list.add("Rating: " + String.format("%.1f", user.getRating())
+                        + "  Borrowed: " + user.getObiecteLuate()
+                        + "  Offered: " + user.getObiecteOferite()
+                        + " | " + user.getDisplayName());
                 Collections.sort(list, Collections.reverseOrder());
                 adapter.notifyDataSetChanged();
             }

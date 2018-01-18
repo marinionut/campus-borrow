@@ -15,13 +15,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Nume:"
-    android:id="@+id/textView"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true" />
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:textSize="24sp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -33,13 +32,14 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Descriere:"
-        android:id="@+id/textView2"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/txtNumeObiect"
-        android:layout_alignParentStart="true" />
+        android:text="Description:"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:textSize="24sp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -54,16 +54,16 @@
 
     <Button
         android:id="@+id/button_choose"
+        style="@android:style/Widget.Material.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="Browse Image"
-        android:textColor="#fff"
         android:layout_below="@+id/txtDescriereObiect"
-        android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:text="Browse Image"
+        android:textColor="#fff" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -75,32 +75,22 @@
         android:background="@drawable/border"
         android:padding="5dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnAddObject"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical|center_horizontal|center">
+        android:layout_alignStart="@+id/imageView"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="17dp"
+        android:text="Add" />
 
-        <Button
-            android:id="@+id/btnAddObject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="btnAddObject_Click"
-            android:text="Adauga" />
-
-        <Button
-            android:id="@+id/btnClearObject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="btnClearObject_Click"
-            android:layout_alignEnd="@+id/btnAddObject"
-            android:text="Sterge" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnClearObject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAddObject"
+        android:layout_alignBottom="@+id/btnAddObject"
+        android:layout_alignEnd="@+id/imageView"
+        android:text="Reset" />
 
 </RelativeLayout>

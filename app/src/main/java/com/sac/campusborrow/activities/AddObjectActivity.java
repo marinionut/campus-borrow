@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ public class AddObjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addobject);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -138,7 +140,6 @@ public class AddObjectActivity extends AppCompatActivity {
             progressDialog.show();
 
             final String uuid = UUID.randomUUID().toString();
-
             StorageReference ref = storageReference.child("images/"+ uuid);
             ref.putFile(filePathUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -184,13 +185,14 @@ public class AddObjectActivity extends AppCompatActivity {
         obiect.setStatus(Status.DISPONIBIL.name());
 
         databaseReference.child("obiecte").child(uuid).setValue(obiect);
+        Intent i = new Intent(AddObjectActivity.this, DashboardActivity.class);
+        startActivity(i);
     }
 
     private boolean sanityChecks() {
         if ((imageView != null) &&
                 (txtObjectName != null && txtObjectName.getText().length() != 0) &&
                 (txtObjectDescription != null && txtObjectDescription.getText().length() != 0)) {
-
             return true;
         }
         return false;

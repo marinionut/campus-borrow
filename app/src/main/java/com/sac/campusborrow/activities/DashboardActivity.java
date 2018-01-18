@@ -7,14 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.sac.campusborrow.R;
 import com.sac.campusborrow.fragments.FragmentFour;
 import com.sac.campusborrow.fragments.FragmentOne;
@@ -29,8 +22,6 @@ import java.util.List;
  */
 
 public class DashboardActivity extends AppCompatActivity {
-    private TextView tvEmail;
-    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +30,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentOne(), "Anunturi");
-        adapter.addFragment(new FragmentTwo(), "Imprumuturi");
-        adapter.addFragment(new FragmentThree(), "Anunturile tale");
-        adapter.addFragment(new FragmentFour(), "Utilizatori");
+        adapter.addFragment(new FragmentOne(), "Objects");
+        adapter.addFragment(new FragmentTwo(), "Requests");
+        adapter.addFragment(new FragmentThree(), "My objects");
+        adapter.addFragment(new FragmentFour(), "Users");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    public String getEmail() {
-        return this.email;
     }
 
     // Adapter for the viewpager using FragmentPagerAdapter

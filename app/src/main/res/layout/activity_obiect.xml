@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/titluObj"
         android:layout_width="wrap_content"
@@ -12,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
-        android:text="Titlu"
+        android:text="Title"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:textSize="36sp" />
 
@@ -27,23 +26,25 @@
         android:cropToPadding="false"
         app:srcCompat="@drawable/border" />
 
-    <!--android:layout_toStartOf="@+id/imagineObj"-->
     <TextView
         android:id="@+id/descriereObj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imagineObj"
-        android:layout_marginTop="30dp"
-        android:text="Descriere:"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:text="Description:"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
 
     <TextView
         android:id="@+id/ownerObj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/endTrade"
-        android:layout_alignParentStart="true"
-        android:text="Detinator:"
+        android:layout_alignStart="@+id/descriereObj"
+        android:layout_below="@+id/descriereObj"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="10dp"
+        android:text="user"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
 
     <TextView
@@ -53,37 +54,17 @@
         android:layout_alignStart="@+id/descriereObj"
         android:layout_below="@+id/ownerObj"
         android:autoLink="phone"
-        android:text="Telefon:"
+        android:text="phone"
+        android:layout_marginLeft="10dp"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-    <TextView
-        android:id="@+id/rPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rUserName"
-        android:layout_alignTop="@+id/accTrade"
-        android:autoLink="phone"
-        android:text="Telefon:"
-        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-
-    <TextView
-        android:id="@+id/rUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/accTrade"
-        android:layout_alignEnd="@+id/descriereObj"
-        android:text="Utilizator:"
-        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
 
     <RatingBar
         android:id="@+id/rating"
-        style="?android:attr/ratingBarStyleSmall"
+        style="?android:attr/ratingBarStyleIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/accTrade"
-        android:layout_alignStart="@+id/rPhone"
+        android:layout_below="@+id/phoneOwnerObj"
+        android:layout_centerHorizontal="true"
         android:isIndicator="true"
         android:numStars="5"
         android:stepSize="0.1" />
@@ -93,57 +74,39 @@
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="19dp"
-        android:layout_marginEnd="13dp"
-        android:text="Sterge" />
-
-    <Button
-        android:id="@+id/rejTrade"
-        style="@android:style/Widget.Material.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/phoneOwnerObj"
-        android:layout_toStartOf="@+id/delObj"
-        android:text="Refuza" />
-
-    <Button
-        android:id="@+id/accTrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/delObj"
-        android:layout_alignBottom="@+id/delObj"
-        android:layout_toStartOf="@+id/delObj"
-        android:text="Accepta" />
+        android:layout_alignBaseline="@+id/endTrade"
+        android:layout_alignBottom="@+id/endTrade"
+        android:layout_centerHorizontal="true"
+        android:text="Delete" />
 
     <Button
         android:id="@+id/reqTrade"
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/rejTrade"
-        android:layout_alignBottom="@+id/rejTrade"
-        android:layout_toEndOf="@+id/rejTrade"
-        android:text="Cere" />
+        android:layout_alignBaseline="@+id/delObj"
+        android:layout_alignBottom="@+id/delObj"
+        android:layout_centerHorizontal="true"
+        android:text="Request borrow" />
 
     <Button
         android:id="@+id/endTrade"
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/cancelTrade"
-        android:layout_alignStart="@+id/cancelTrade"
-        android:layout_below="@+id/cancelTrade"
-        android:text="Termina imprumut" />
+        android:layout_below="@+id/rating"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:text="End borrow" />
 
     <Button
         android:id="@+id/cancelTrade"
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/delObj"
-        android:layout_below="@+id/imagineObj"
-        android:text="Anuleaza imprumut" />
+        android:layout_alignBaseline="@+id/endTrade"
+        android:layout_alignBottom="@+id/endTrade"
+        android:layout_centerHorizontal="true"
+        android:text="Cancel borrow" />
 
 </RelativeLayout>

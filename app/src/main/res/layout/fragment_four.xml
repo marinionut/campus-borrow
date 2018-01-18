@@ -9,5 +9,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:singleLine="false"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"/>
 </RelativeLayout>
